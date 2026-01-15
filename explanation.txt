@@ -1,0 +1,2 @@
+Strategy: Unix pipeline (`sort`) streams data to Python, minimizing memory ($O(N \log N)$). Developed with Gemini CLI and validated via Docker to verify low-RAM (64Mb) stability.
+Future: Implement Tarjan's algorithm for SCC decomposition to optimize cycle detection and add parallel processing for independent groups.
