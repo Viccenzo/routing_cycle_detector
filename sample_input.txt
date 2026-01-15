@@ -1,0 +1,5 @@
+SystemA|SystemB|claim1|REJECTED
+SystemB|SystemC|claim1|REJECTED
+SystemC|SystemA|claim1|REJECTED
+SystemX|SystemY|claim2|ACCEPTED
+SystemY|SystemZ|claim2|ACCEPTED
