@@ -1,15 +1,22 @@
 import sys
 import subprocess
 import collections
+import argparse
 
-def get_sorted_stream(file_path):
+def get_sorted_stream(file_path, memory_limit=None):
     """
     Spawns a subprocess to sort the input file by claim_id and status_code.
     Returns the stdout stream of the sort process.
     """
     # We use LC_ALL=C for faster sorting (byte comparison)
     # Sort key: fields 3 (claim_id) and 4 (status_code)
-    sort_cmd = ["sort", "-t|", "-k3,3", "-k4,4", file_path]
+    sort_cmd = ["sort", "-t|", "-k3,3", "-k4,4"]
+    
+    # Add memory limit flag if provided (e.g., "256M", "1G")
+    if memory_limit:
+        sort_cmd.extend(["-S", memory_limit])
+        
+    sort_cmd.append(file_path)
     
     try:
         process = subprocess.Popen(
@@ -90,12 +97,13 @@ def find_longest_cycle(edges):
     return longest_cycle
 
 def main():
-    if len(sys.argv) != 2:
-        sys.stderr.write("Usage: python3 my_solution.py <input_file>\n")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Find longest routing cycle in a large file.")
+    parser.add_argument("input_file", help="Path to the input file")
+    parser.add_argument("--memory-limit", help="Memory limit for the sort command (e.g., 256M, 1G). If omitted, uses default.")
+    
+    args = parser.parse_args()
 
-    file_path = sys.argv[1]
-    process = get_sorted_stream(file_path)
+    process = get_sorted_stream(args.input_file, args.memory_limit)
     
     max_length = 0
     best_claim_id = None
