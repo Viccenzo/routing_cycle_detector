@@ -119,7 +119,10 @@ def main():
     process.wait()
 
     if best_claim_id is not None:
-        print(f"{best_claim_id},{best_status_code},{max_length}")
+        result = f"{best_claim_id},{best_status_code},{max_length}"
+        print(result)
+        with open("solution.txt", "w") as f:
+            f.write(result)
 
 if __name__ == "__main__":
     main()
