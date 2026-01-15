@@ -13,10 +13,5 @@ shift # Shift arguments so $@ contains the rest
 echo "Building Docker image..."
 docker build -t cycle-detector . > /dev/null
 
-# Run the container
-echo "Running cycle detector..."
-echo "---------------------------------------------------"
-# We mount the input file to /app/input.txt
-# We pass 'input.txt' as the first arg to the python script
-# We then pass any remaining arguments ($@) to the script
-docker run --rm -v "$(pwd)/$INPUT_FILE:/app/input.txt" cycle-detector input.txt "$@"
+# Run the container with a memory limit (e.g., 128MB) to validate memory efficiency
+docker run --rm --memory="128m" -v "$(pwd)/$INPUT_FILE:/app/input.txt" cycle-detector input.txt "$@"
